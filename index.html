@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grid Assignment Style Site</title>
+<style>
+  /* ------------------- CSS ------------------- */
+  * {margin:0; padding:0; box-sizing:border-box;}
+  body {
+    font-family: Arial, sans-serif;
+    line-height:1.6;
+    background: linear-gradient(135deg, #c3f0ff, #f9dfff);
+    color:#111;
+    min-height:100vh;
+  }
+
+  /* header */
+  .header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 24px;
+    background: rgba(255,255,255,0.9);
+    border-bottom:1px solid #ddd;
+    position: sticky;
+    top:0;
+    z-index:10;
+  }
+  .logo {font-size:1.4rem; font-weight:bold;}
+  .navbar a {
+    margin-left:16px;
+    text-decoration:none;
+    color:#333;
+  }
+  .navbar a:hover {color:#007BFF;}
+
+  /* hero */
+  .hero {
+    padding: 80px 24px;
+    text-align:center;
+    background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
+    color: #fff;
+  }
+  .hero h1 {font-size:3rem; margin-bottom:12px; text-shadow:1px 1px 6px rgba(0,0,0,0.5);}
+  .hero p {font-size:1.5rem; text-shadow:1px 1px 6px rgba(0,0,0,0.4);}
+
+  /* about */
+  .about {
+    padding: 40px 24px;
+    max-width:800px;
+    margin:auto;
+    background: rgba(255,255,255,0.8);
+    border-radius:12px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+    margin-top:40px;
+  }
+  .about h2 {font-size:2rem; margin-bottom:16px;}
+  .about p {margin-bottom:12px; color:#333;}
+
+  /* features grid */
+  .features {
+    padding:40px 24px;
+  }
+  .features .grid {
+    display:grid;
+    gap:16px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    max-width:1000px;
+    margin:auto;
+  }
+  .features .card {
+    background:#fff;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.05);
+    font-size:1.1rem;
+    text-align:center;
+    cursor:pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .features .card:hover {transform: translateY(-6px); box-shadow:0 12px 24px rgba(0,0,0,0.08);}
+  .features .card.active {background:#e0f0ff;}
+
+  /* search input */
+  #searchInput {
+    padding:8px 12px;
+    margin:12px auto;
+    display:block;
+    max-width:300px;
+    border-radius:8px;
+    border:1px solid #ccc;
+  }
+
+  /* footer */
+  .footer {
+    text-align:center;
+    padding:16px;
+    margin-top:40px;
+    background: rgba(255,255,255,0.9);
+    border-top:1px solid #ddd;
+    color:#666;
+  }
+
+  /* responsive */
+  @media (max-width:600px){
+    .hero h1 {font-size:2rem;}
+    .hero p {font-size:1rem;}
+    .navbar a {margin-left:8px; font-size:0.9rem;}
+  }
+</style>
+</head>
+<body>
+
+<!-- header -->
+<header class="header">
+  <div class="logo">LOGO</div>
+  <nav class="navbar">
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Services</a>
+    <a href="#">Contact</a>
+  </nav>
+</header>
+
+<!-- hero -->
+<section class="hero">
+  <h1>Welcome to Our Site</h1>
+  <p>Discover amazing experiences</p>
+</section>
+
+<!-- about -->
+<section class="about">
+  <h2>About Our Company</h2>
+  <p>We provide exceptional services and innovative solutions to meet your needs.</p>
+  <p>Our team of experts works tirelessly to ensure customer satisfaction and success.</p>
+</section>
+
+<!-- search -->
+<input type="text" id="searchInput" placeholder="Search features...">
+
+<!-- features grid -->
+<section class="features">
+  <div class="grid">
+    <div class="card">24/7 Customer Support</div>
+    <div class="card">Industry Leading Experts</div>
+    <div class="card">Satisfaction Guaranteed</div>
+    <div class="card">Affordable Pricing</div>
+    <div class="card">Fast Delivery</div>
+    <div class="card">Custom Solutions</div>
+  </div>
+</section>
+
+<!-- footer -->
+<footer class="footer">
+  <p>made by sarthak bansal</p>
+</footer>
+
+<!-- JS -->
+<script>
+  // 1️⃣ Card click highlight
+  document.addEventListener('click', (e)=>{
+    const card = e.target.closest('.card');
+    if(!card) return;
+    document.querySelectorAll('.card.active').forEach(c=>c.classList.remove('active'));
+    card.classList.add('active');
+    setTimeout(()=>card.classList.remove('active'),1200);
+  });
+
+  // 2️⃣ Search/filter
+  const searchInput = document.getElementById('searchInput');
+  searchInput.addEventListener('input', ()=>{
+    const query = searchInput.value.toLowerCase();
+    document.querySelectorAll('.features .card').forEach(card=>{
+      const text = card.innerText.toLowerCase();
+      card.style.display = text.includes(query)?'':'none';
+    });
+  });
+
+  // 3️⃣ Keyboard shortcut "/" focuses search
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === '/'){
+      e.preventDefault();
+      searchInput.focus();
+    }
+  });
+</script>
+
+</body>
+</html>
